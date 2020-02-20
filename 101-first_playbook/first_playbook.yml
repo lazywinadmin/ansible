@@ -1,15 +1,11 @@
 ---
 
-- name: Network Getting Started First Playbook
-  connection: network_cli
+- name: First Playbook
   gather_facts: false
-  hosts: all
+  hosts: 127.0.0.1
+  connection: local
   tasks:
 
-    - name: Get config for VyOS devices
-      vyos_facts:
-        gather_subset: all
-
-    - name: Display the config
+    - name: First Task
       debug:
-        msg: "The hostname is {{ ansible_net_hostname }} and the OS is {{ ansible_net_version }}"
+        msg: "Hello World!"
