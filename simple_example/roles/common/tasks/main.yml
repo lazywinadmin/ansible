@@ -1,12 +1,8 @@
 ---
 
 - name: Common tasks
-#  include_role:
- #   name: hello
-  #  task_from:main
-  
-- block:
-  - set_fact:
-      aa: "{{ myvar.aa }}"
-  - set_fact:
-      bb: "{{ myvar.bb }}"
+  block:
+    - set_fact:
+        aa: "{{ myvar.aa }}"
+    - set_fact:
+        bb: "{{ myvar.bb }}"
