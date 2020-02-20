@@ -1,0 +1,7 @@
+{
+    "$schema": "TBD",
+    "myvar":{
+        "aa":"one",
+        "bb":"two"
+    }
+}
