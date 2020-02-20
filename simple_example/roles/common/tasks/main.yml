@@ -6,3 +6,7 @@
         aa: "{{ myvar.aa }}"
     - set_fact:
         bb: "{{ myvar.bb }}"
+
+- name: Other stuff
+  debug:
+    msg: "my first variable is {{ aa }}"
