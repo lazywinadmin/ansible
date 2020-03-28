@@ -1,0 +1,27 @@
+---
+
+- name: First Playbook
+  gather_facts: false
+  hosts: 127.0.0.1
+  connection: local
+  tasks:
+
+    - name: First Task
+      debug:
+        msg: "Hello World!"
+
+    - name: get processes(shell)
+      shell: ps
+      register: myprocess
+
+    - name: show output
+      debug:
+        var: myprocess
+
+    - name: get processes(command)
+      command: ps
+      register: myprocess2
+
+    - name: show output2
+      debug:
+        var: myprocess2
