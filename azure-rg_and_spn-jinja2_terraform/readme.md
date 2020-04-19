@@ -12,6 +12,7 @@ Finally Az Cli is used to create a SPN dedicated for the Resource Group and assi
 ## Prereq
 
 * install az cli [see microsoft doc](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-apt?view=azure-cli-latest#manual-install-instructions)
+* existing subscription
 * spn to execute tasks, information stored in `secrets.json` (not committed)
   * the spn is used to execute the terraform configuration and az cli commands
   * the spn need to be 'Global Administrator' in AAD in order to create spn app registration. The assignment can take 10/20 min to take effect
