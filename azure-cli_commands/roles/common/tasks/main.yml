@@ -1,0 +1,92 @@
+---
+
+- name: Common tasks
+  block:
+    - set_fact:
+        aa: "{{ myvar.aa }}"
+    - set_fact:
+        bb: "{{ myvar.bb }}"
+
+- name: Other stuff
+  debug:
+    msg: "my first variable is {{ aa }}"
+
+- name: Read the JSON file Secrets
+  shell: cat secrets.json
+  register: resultsecret
+
+- name: Read the JSON file Config
+  shell: cat config.json
+  register: resultconfig
+
+- name: save the Json data for secrets
+  set_fact:
+    jsondata_secrets: "{{ resultsecret.stdout | from_json }}"
+
+- name: save the Json data for configuration
+  set_fact:
+    jsondata_config: "{{ resultconfig.stdout | from_json }}"
+
+- name: spn_app_id
+  set_fact:
+    spn_app_id: "{{ jsondata_secrets | json_query(jmesquery) }}"
+  vars:
+    jmesquery: 'appId'
+
+- debug:
+    var: spn_app_id
+    verbosity: 0
+
+- name: spn_app_passw
+  set_fact:
+    spn_app_passw: "{{ jsondata_secrets | json_query(jmesquery) }}"
+  vars:
+    jmesquery: 'password'
+
+- name: spn_tenantid
+  set_fact:
+    spn_tenantid: "{{ jsondata_secrets | json_query(jmesquery) }}"
+  vars:
+    jmesquery: 'tenant'
+
+- name: subscription_id
+  set_fact:
+    subscription_id: "{{ jsondata_secrets | json_query(jmesquery) }}"
+  vars:
+    jmesquery: 'subscription_id'
+
+- name: resourcegroup_basename
+  set_fact:
+    resourcegroup_basename: "{{ jsondata_config | json_query(jmesquery) }}"
+  vars:
+    jmesquery: 'resourcegroup_basename'
+
+- name: location
+  set_fact:
+    location: "{{ jsondata_config | json_query(jmesquery) }}"
+  vars:
+    jmesquery: 'location'
+
+- name: az login
+  shell: az login --service-principal --username {{ spn_app_id }} --password {{ spn_app_passw }} --tenant {{ spn_tenantid }}
+  register: az_login
+
+- debug:
+    var: az_login
+    verbosity: 0
+
+- name: az context
+  shell: az account set --subscription {{subscription_id}}
+  register: az_context
+
+- debug:
+    var: az_context
+    verbosity: 0
+
+- name: az create rg
+  shell: az group create -l {{location}} -n {{resourcegroup_basename}}
+  register: az_rg
+
+- debug:
+    var: az_rg
+    verbosity: 0

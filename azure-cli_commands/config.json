@@ -1,0 +1,8 @@
+{
+    "location":"westus",
+    "resourcegroup_basename":"ansibletest",
+    "myvar":{
+        "aa":"one",
+        "bb":"two"
+    }
+}
