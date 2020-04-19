@@ -28,12 +28,13 @@ Most of the following information is shown when creating the SPN account. You al
 
 ```
 {
-    "location":"westus",
-    "resourcegroup_basename":"ansibletest",
+    "customer_location":"westus",
+    "customer_resourcegroup_basename":"ansibletest2",
     "myvar":{
         "aa":"one",
         "bb":"two"
-    }
+    },
+    "customer_spn_basename":"ansibletestsspn2"
 }
 ```
 
@@ -52,7 +53,7 @@ Most of the following information is shown when creating the SPN account. You al
 Just run the following:
 
 ```
-deploy.sh
+./deploy.sh
 ```
 
 This will just run `ansible-playbook` against the `main.yml` at the root for the repository
