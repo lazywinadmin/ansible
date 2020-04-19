@@ -1,0 +1,9 @@
+{
+    "customer_location":"westus",
+    "customer_resourcegroup_basename":"ansibletest2",
+    "myvar":{
+        "aa":"one",
+        "bb":"two"
+    },
+    "customer_spn_basename":"ansibletestsspn"
+}

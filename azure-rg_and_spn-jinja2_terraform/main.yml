@@ -1,0 +1,9 @@
+---
+
+- hosts: localhost
+  roles:
+  - common
+
+  vars_files:
+  - config.json
+  - secrets.json

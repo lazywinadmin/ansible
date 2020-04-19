@@ -1,0 +1,6 @@
+azure_subscription_id = "{{subscription_id}}"
+azure_client_id = "{{appId}}"
+azure_client_secret = "{{password}}"
+azure_tenant_id = "{{tenant}}"
+rg_name="{{ customer_resourcegroup_basename }}"
+location="{{ customer_location }}"

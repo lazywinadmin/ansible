@@ -1,0 +1,89 @@
+---
+
+# - name: az login
+#   shell: az login --service-principal --username {{ appId }} --password {{ password }} --tenant {{ tenant }}
+#   register: az_login
+
+# - debug:
+#     var: az_login
+#     verbosity: 0
+
+# - name: az context
+#   shell: az account set --subscription {{subscription_id}}
+#   register: az_context
+
+# - debug:
+#     var: az_context
+#     verbosity: 0
+
+
+- name: Create output/tf folder
+  file:
+    path: output/tf/
+    state: directory
+
+- name: Ansible Template - terraform.tfvars
+  template:
+    src: templates/terraform.tfvars
+    dest: output/tf/terraform.tfvars
+
+- name: Ansible Template - providers.tf
+  template:
+    src: templates/providers.tf
+    dest: output/tf/providers.tf
+
+- name: Ansible Template - main.tf
+  template:
+    src: templates/main.tf
+    dest: output/tf/main.tf
+
+- name: Ansible Template - variables.tf
+  template:
+    src: templates/variables.tf
+    dest: output/tf/variables.tf
+
+- name: terraform init
+  shell: |
+    cd output/tf
+    terraform init
+  register: tf_init
+
+- debug:
+    var: tf_init
+    verbosity: 0
+
+- name: terraform plan
+  shell: |
+    cd output/tf
+    terraform plan -var-file terraform.tfvars -out customer.plan
+  register: tf_plan
+
+- debug:
+    var: tf_plan
+    verbosity: 0
+
+- name: terraform apply
+  shell: |
+    cd output/tf
+    terraform apply customer.plan
+  register: tf_apply
+
+- debug:
+    var: tf_apply
+    verbosity: 0
+
+# - name: az create resource group
+#   shell: az group create -l {{location}} -n {{resourcegroup_basename}}
+#   register: az_rg
+
+# - debug:
+#     var: az_rg
+#     verbosity: 0
+
+# - name: az ad create spn and owner on resourcegroup "{{resourcegroup_basename}}"
+#   shell: az ad sp create-for-rbac -n "{{customer_spn_basename}}" --role owner --scopes /subscriptions/{{subscription_id}}/resourceGroups/{{resourcegroup_basename}}
+#   register: az_customerspn
+
+# - debug:
+#     var: az_customerspn
+#     verbosity: 0
