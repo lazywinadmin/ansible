@@ -5,5 +5,5 @@
         "aa":"one",
         "bb":"two"
     },
-    "customer_spn_basename":"ansibletestsspn"
+    "customer_spn_basename":"ansibletestsspn2"
 }
