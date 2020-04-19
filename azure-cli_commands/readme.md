@@ -1,11 +1,14 @@
 # Ansible - Using Az cli command
 
+The following is to test the creation a Resource Group for a customer and create/assign a dedicated SPN to it as a owner
 
 ## Prereq
 
 * install jmespath `python -m pip install jmespath` to parse JSON file
 * install az cli [see microsoft doc](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-apt?view=azure-cli-latest#manual-install-instructions)
 * spn to execute tasks, information stored in `secrets.json` (not committed)
+  * the spn is used to execute the az cli commands
+  * the spn need to be Global Administrator in order to create spn app registration
 * `config.json` with configuration to apply
 
 ### Example of secrets.json
