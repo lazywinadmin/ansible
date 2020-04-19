@@ -67,6 +67,13 @@
   vars:
     jmesquery: 'location'
 
+
+- name: customer_spn_basename
+  set_fact:
+    customer_spn_basename: "{{ jsondata_config | json_query(jmesquery) }}"
+  vars:
+    jmesquery: 'customer_spn_basename'
+
 - name: az login
   shell: az login --service-principal --username {{ spn_app_id }} --password {{ spn_app_passw }} --tenant {{ spn_tenantid }}
   register: az_login
@@ -83,10 +90,18 @@
     var: az_context
     verbosity: 0
 
-- name: az create rg
+- name: az create resource group
   shell: az group create -l {{location}} -n {{resourcegroup_basename}}
   register: az_rg
 
 - debug:
     var: az_rg
+    verbosity: 0
+
+- name: az ad create spn and owner on resourcegroup "{{resourcegroup_basename}}"
+  shell: az ad sp create-for-rbac -n "{{customer_spn_basename}}" --role owner --scopes /subscriptions/{{subscription_id}}/resourceGroups/{{resourcegroup_basename}}
+  register: az_customerspn
+
+- debug:
+    var: az_customerspn
     verbosity: 0
